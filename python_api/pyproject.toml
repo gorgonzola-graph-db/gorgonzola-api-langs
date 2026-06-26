@@ -1,5 +1,5 @@
 [project]
-name = "gorgonzola"
+name = "gorgonzola-db"
 description = "Highly scalable, extremely fast, easy-to-use embeddable graph database"
 readme = "README.md"
 license = { text = "MIT" }
