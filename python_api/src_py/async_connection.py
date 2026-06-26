@@ -171,6 +171,7 @@ class AsyncConnection:
             return await loop.run_in_executor(self.executor, conn.execute, query, parameters)
         except asyncio.CancelledError:
             conn.interrupt()
+            raise
         finally:
             self.__decrement_connection_counter(conn_index)
 
