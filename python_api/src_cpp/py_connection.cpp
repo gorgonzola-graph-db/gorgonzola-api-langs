@@ -8,6 +8,7 @@
 #include "common/exception/runtime.h"
 #include "common/string_format.h"
 #include "common/types/uuid.h"
+#include "common/types/struct_field.h"
 #include "common/utils.h"
 #include "datetime.h" // from Python
 #include "function/cast/functions/cast_string_non_nested_functions.h"
@@ -18,8 +19,8 @@
 #include "processor/result/factorized_table.h"
 #include "pyarrow/pyarrow_scan.h"
 
-using namespace kuzu::common;
-using namespace kuzu;
+using namespace gorgonzola::common;
+using namespace gorgonzola;
 
 void PyConnection::initialize(py::handle& m) {
     py::class_<PyConnection>(m, "Connection")
@@ -125,7 +126,7 @@ static std::unique_ptr<function::ScanReplacementData> replacePythonObject(
 }
 
 PyConnection::PyConnection(PyDatabase* pyDatabase, uint64_t numThreads) {
-    storageDriver = std::make_unique<kuzu::main::StorageDriver>(pyDatabase->database.get());
+    storageDriver = std::make_unique<gorgonzola::main::StorageDriver>(pyDatabase->database.get());
     conn = std::make_unique<Connection>(pyDatabase->database.get());
     conn->getClientContext()->addScanReplace(
         function::ScanReplacement(lookupPythonObject, replacePythonObject));
@@ -563,7 +564,7 @@ Value PyConnection::transformPythonValueAs(const py::handle& val, const LogicalT
         return Value::createValue<double>(py::cast<py::float_>(val).cast<double>());
     case LogicalTypeID::DECIMAL: {
         auto str = py::cast<std::string>(py::str(val));
-        int128_t result = 0;
+        int128_t result(0);
         function::decimalCast(str.c_str(), str.size(), result, type);
         auto val = Value::createDefaultValue(type);
         val.val.int128Val = result;

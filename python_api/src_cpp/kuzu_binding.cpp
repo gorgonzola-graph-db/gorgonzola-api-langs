@@ -9,10 +9,10 @@ void bind(py::module& m) {
     PyConnection::initialize(m);
     PyPreparedStatement::initialize(m);
     PyQueryResult::initialize(m);
-    auto cleanImportCache = []() { kuzu::importCache.reset(); };
+    auto cleanImportCache = []() { gorgonzola::importCache.reset(); };
     m.add_object("_clean_import_cache", py::capsule(cleanImportCache));
 }
 
-PYBIND11_MODULE(_kuzu, m) {
+PYBIND11_MODULE(_gorgonzola, m) {
     bind(m);
 }

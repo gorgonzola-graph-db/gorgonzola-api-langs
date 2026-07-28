@@ -1,11 +1,12 @@
 #include "pandas/pandas_bind.h"
 
 #include "common/exception/runtime.h"
+#include "common/types/logical_type_utils.h"
 #include "pandas/pandas_analyzer.h"
 
-namespace kuzu {
+namespace gorgonzola {
 
-using namespace kuzu::common;
+using namespace gorgonzola::common;
 
 struct PandasBindColumn {
 public:
@@ -111,4 +112,4 @@ void Pandas::bind(py::handle dfToBind,
     }
 }
 
-} // namespace kuzu
+} // namespace gorgonzola

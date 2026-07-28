@@ -1,10 +1,11 @@
 #include "pandas/pandas_analyzer.h"
 
 #include "cached_import/py_cached_import.h"
+#include "common/types/struct_field.h"
 #include "function/built_in_function_utils.h"
 #include "py_conversion.h"
 
-namespace kuzu {
+namespace gorgonzola {
 
 // NOTE: MOVES right to left
 static bool upgradeType(common::LogicalType& left, common::LogicalType& right) {
@@ -225,4 +226,4 @@ bool PandasAnalyzer::analyze(py::object column) {
     return canConvert;
 }
 
-} // namespace kuzu
+} // namespace gorgonzola

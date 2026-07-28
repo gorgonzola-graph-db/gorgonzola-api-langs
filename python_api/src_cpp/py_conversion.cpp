@@ -4,13 +4,14 @@
 #include "common/case_insensitive_map.h"
 #include "common/exception/not_implemented.h"
 #include "common/type_utils.h"
+#include "common/types/struct_field.h"
 #include "common/types/uuid.h"
 #include "py_objects.h"
 
-namespace kuzu {
+namespace gorgonzola {
 
-using namespace kuzu::common;
-using kuzu::importCache;
+using namespace gorgonzola::common;
+using gorgonzola::importCache;
 
 PythonObjectType getPythonObjectType(py::handle& ele) {
     auto pandasNa = importCache->pandas.NA();
@@ -188,8 +189,8 @@ void transformPythonValue(common::ValueVector* outputVector, uint64_t pos, py::h
     } break;
     case PythonObjectType::UUID: {
         outputVector->setNull(pos, false /* isNull */);
-        int128_t result = 0;
-        UUID::fromString(ele.attr("hex").cast<std::string>(), result);
+        ku_uuid_t result;
+        UUID::fromString(ele.attr("hex").cast<std::string>(), result.value);
         outputVector->setValue(pos, result);
     } break;
     case PythonObjectType::Dict: {
@@ -210,4 +211,4 @@ void transformPythonValue(common::ValueVector* outputVector, uint64_t pos, py::h
     }
 }
 
-} // namespace kuzu
+} // namespace gorgonzola
