@@ -1,0 +1,15 @@
+name: Build Windows Wheels
+
+on:
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      isNightly:
+        type: boolean
+        required: true
+        default: false
+
+jobs:
+  call-workflow:
+    uses: gorgonzola-graph-db/gorgonzola-workflows/.github/workflows/windows-wheel-workflow.yml@master
+    secrets: inherit

@@ -1,0 +1,15 @@
+name: Build Windows Java Lib
+
+on:
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      isNightly:
+        type: boolean
+        required: true
+        default: false
+
+jobs:
+  call-workflow:
+    uses: gorgonzola-graph-db/gorgonzola-workflows/.github/workflows/windows-java-workflow.yml@master
+    secrets: inherit
